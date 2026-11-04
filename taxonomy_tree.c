@@ -29,6 +29,17 @@ void read_taxon_info(const char *label, char *name_out, int *lifespan_out) {
 void link_parent(Taxon *child, Taxon *parent) {
     child -> parent_group = parent;
 }
+
+void print_taxonomy(Taxon *species_list, int species_count) {
+    printf(" SPECIES HEIRARCHY");
+    for (int i = 0; i < species_count; i++) {
+        Taxon *s = species_list[i];
+        printf("Species %d %s \n", i + 1,s->name);
+        printf("Average Lifespan: %d ", s-> lifespan);
+        printf("belongs to genus: %s (lifespan: %d yrs)", s->parent_group->name, s->parent_group->lifespan);
+        printf(" belongs to Family: %s (lifespan: %d yrs)", s->parent_group->parent_group->name, s->parent_group->parent_group->lifespan);
+    }
+}
 // milestone 1 
 int main() {
     char temp_name[50];
@@ -43,6 +54,20 @@ int main() {
         all_taxa[i] = create_taxon(temp_name, temp_life);
     }
 
+   link_parent(all_taxa[1], all_taxa[0]);
+    link_parent(all_taxa[2], all_taxa[0]);
+    
+    link_parent(all_taxa[3], all_taxa[1]);
+    link_parent(all_taxa[4], all_taxa[1]);
+    link_parent(all_taxa[5], all_taxa[2]);
+    link_parent(all_taxa[6], all_taxa[2]);
+
+
+    Taxon *species_arr[4];
+    species_arr[0] = all_taxa[3];
+    species_arr[1] = all_taxa[4];
+    species_arr[2] = all_taxa[5];
+    species_arr[3] = all_taxa[6];
 
 
 }
